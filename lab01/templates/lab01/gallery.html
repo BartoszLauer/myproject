@@ -1,0 +1,29 @@
+{% extends "lab01/base.html" %}
+{% load static %}
+
+{% block title %}Galeria{% endblock %}
+
+{% block content %}
+<h1>Galeria</h1>
+<p class="lead">Moje ulubione filmy, do których lubię wracać.</p>
+
+<section class="section">
+  <h2 class="section-title">Półka z filmami <small>{{ movies|length }}</small></h2>
+  <div class="posters">
+    {% for movie in movies %}
+      <article class="poster" style="--poster: {{ movie.color }}">
+        <div class="poster-art">
+          <img class="poster-img" src="{% static movie.image %}" alt="Plakat filmu {{ movie.title }}" loading="lazy">
+          <span class="poster-year">{{ movie.year }}</span>
+          <h3>{{ movie.title }}</h3>
+          <span class="poster-genre">{{ movie.genre }}</span>
+        </div>
+        <div class="poster-info">
+          <span class="stars" title="{{ movie.rating }}/5">{{ movie.stars }}</span>
+          <p>{{ movie.note }}</p>
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

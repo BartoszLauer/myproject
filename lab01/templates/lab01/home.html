@@ -1,0 +1,32 @@
+{% extends "lab01/base.html" %}
+
+{% block title %}Start{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <p class="hello">Cześć, jestem {{ author }}.</p>
+  <h1>Moje hobby to <mark>IT</mark> i <mark>oglądanie filmów</mark>.</h1>
+  <p class="lead">{{ description }}</p>
+</section>
+
+<section class="split">
+  <div class="split-main">
+    <h2>IT, czyli wszystko po trochu</h2>
+    <dl class="topics">
+      {% for topic in it_topics %}
+        <div class="topic">
+          <dt>{{ topic.name }}</dt>
+          <dd>{{ topic.text }}</dd>
+        </div>
+      {% endfor %}
+    </dl>
+  </div>
+
+  <aside class="split-side">
+    <h2>Oglądanie filmów</h2>
+    <p>{{ movies_text }}</p>
+    <a class="more" href="{% url 'lab01:gallery' %}">moja półka z filmami &rarr;</a>
+  </aside>
+</section>
+
+{% endblock %}

@@ -1,0 +1,611 @@
+/* =====================================================
+   NEO-BRUTALIZM x HORROR
+   Grube czarne ramki, twarde cienie bez rozmycia,
+   kolor kości na tle zaschniętej krwi.
+   ===================================================== */
+
+:root {
+  --night: #0e0909;       /* tło strony - prawie czarne */
+  --night-2: #1a0f0f;     /* ciemne pola */
+  --bone: #efe6d6;        /* "kość" - tło kart */
+  --bone-dark: #d9ccb6;
+  --ink: #0a0606;         /* ramki i tekst na kartach */
+  --blood: #b3001b;       /* świeża krew - główny akcent */
+  --blood-dark: #6e0010;  /* zaschnięta krew */
+  --blood-light: #ff2a3d; /* hover */
+  --muted: #5c4a45;       /* tekst drugorzędny na kartach */
+  --muted-dark: #b9a99a;  /* tekst drugorzędny na ciemnym tle */
+
+  --border: 3px solid var(--ink);
+  --shadow: 6px 6px 0 var(--blood);
+  --shadow-hover: 10px 10px 0 var(--blood);
+  --shadow-ink: 6px 6px 0 var(--ink);
+
+  --font: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-head: "Archivo Black", "Arial Black", Impact, sans-serif;
+  --font-horror: "Creepster", "Archivo Black", Impact, cursive;
+  --font-mono: "Space Mono", "Cascadia Code", Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--night);
+  /* lekkie plamy krwi w tle */
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(179, 0, 27, .18) 0 120px, transparent 260px),
+    radial-gradient(circle at 88% 70%, rgba(110, 0, 16, .25) 0 160px, transparent 340px);
+  background-attachment: fixed;
+  color: var(--bone);
+  font-family: var(--font);
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Ziarno / szum jak na starej taśmie VHS */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: .08;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection { background: var(--blood); color: var(--bone); }
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+h1 { font-size: 2.6rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0; }
+a { color: var(--blood-light); }
+
+.container {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== Nagłówek z ociekającą krwią ===== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--blood);
+  border-bottom: var(--border);
+}
+
+/* krople spływające spod nagłówka */
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 34px;
+  pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='34' viewBox='0 0 160 34'%3E%3Cpath fill='%23b3001b' stroke='%230a0606' stroke-width='3' d='M-2 -2H162V4C150 4 148 8 147 14S144 22 141 22 136 18 135 13 130 4 120 4 108 6 107 16 104 31 99 31 94 26 93 16 88 4 78 4 66 6 65 10 62 15 59 15 55 12 54 9 48 4 38 4 27 7 26 17 23 26 19 26 14 20 13 13 8 4 -2 4Z'/%3E%3C/svg%3E") repeat-x;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.logo {
+  font-family: var(--font-horror);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--bone);
+  text-decoration: none;
+  text-shadow: 3px 3px 0 var(--ink);
+  letter-spacing: 1px;
+}
+.logo span {
+  color: var(--ink);
+  text-shadow: 3px 3px 0 var(--bone);
+}
+.logo:hover { animation: flicker 1.2s linear infinite; }
+
+.menu { display: flex; flex-wrap: wrap; gap: 10px; }
+
+.menu a {
+  padding: 6px 16px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--font-head);
+  font-size: .85rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s, background .12s;
+}
+.menu a:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.menu a:active { transform: translate(4px, 4px); box-shadow: 0 0 0 var(--ink); }
+.menu a.active {
+  background: var(--ink);
+  color: var(--blood-light);
+  box-shadow: 4px 4px 0 var(--bone);
+}
+
+/* ===== Treść ===== */
+.content {
+  flex: 1;
+  padding-top: 72px;
+  padding-bottom: 64px;
+}
+
+.lead {
+  color: var(--muted-dark);
+  font-size: 1.1rem;
+  max-width: 660px;
+  margin-bottom: 36px;
+}
+
+.eyebrow, .hello {
+  display: inline-block;
+  margin-bottom: 14px;
+  padding: 2px 10px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+
+.hero {
+  padding: 40px;
+  margin-bottom: 36px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: var(--shadow);
+}
+.hero h1 { font-size: 2.8rem; }
+.hero .lead { color: var(--muted); margin-bottom: 24px; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.button {
+  display: inline-block;
+  padding: 10px 22px;
+  background: var(--blood);
+  color: var(--bone);
+  border: var(--border);
+  box-shadow: var(--shadow-ink);
+  font-family: var(--font-head);
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .12s, box-shadow .12s;
+}
+.button:hover { transform: translate(-2px, -2px); box-shadow: 8px 8px 0 var(--ink); }
+.button:active { transform: translate(6px, 6px); box-shadow: 0 0 0 var(--ink); }
+.button-light { background: var(--bone); color: var(--ink); }
+
+/* Rząd kart */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.card, .movie {
+  flex: 1 1 280px;
+  padding: 24px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.card:hover, .movie:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-hover);
+}
+.card p, .movie p { color: var(--muted); }
+.movie { flex-basis: 200px; }
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 14px;
+  background: var(--blood);
+  color: var(--bone);
+  border: var(--border);
+  font-family: var(--font-head);
+}
+
+.tag, .year {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 1px 10px;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Sekcje */
+.section { margin: 40px 0 60px; }
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 26px;
+  border-bottom: 4px solid var(--blood);
+}
+.section-title small {
+  padding: 0 10px;
+  background: var(--blood);
+  color: var(--bone);
+  border: 2px solid var(--bone);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+}
+
+/* ===== Start ===== */
+.intro { max-width: 760px; margin-bottom: 64px; }
+.intro h1 {
+  font-size: 3.2rem;
+  color: var(--bone);
+  text-shadow: 4px 4px 0 var(--blood-dark);
+}
+
+/* Zakreślenie krwią */
+mark {
+  display: inline-block;
+  padding: 0 10px;
+  background: var(--blood);
+  color: var(--bone);
+  border: var(--border);
+  box-shadow: 4px 4px 0 var(--bone);
+  text-shadow: none;
+  transform: rotate(-1.5deg);
+}
+mark + mark { transform: rotate(1.5deg); }
+
+/* Dwie kolumny */
+.split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+.split-main { flex: 2 1 420px; }
+.split-side {
+  flex: 1 1 240px;
+  align-self: flex-start;
+  padding: 26px;
+  background: var(--blood);
+  color: var(--bone);
+  border: var(--border);
+  box-shadow: 8px 8px 0 var(--bone);
+  transform: rotate(1deg);
+}
+.split-side h2 { color: var(--bone); }
+.split-side p { margin-bottom: 18px; }
+
+.more {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-head);
+  font-size: .85rem;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform .12s, background .12s;
+}
+.more:hover { background: var(--bone); color: var(--ink); transform: translateX(4px); }
+
+/* Lista tematów - karty z kości */
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+}
+.topic {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 24px;
+  padding: 18px 20px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.topic:hover { transform: translate(-3px, -3px); box-shadow: var(--shadow-hover); }
+.topic dt {
+  flex: 0 0 200px;
+  font-family: var(--font-head);
+  text-transform: uppercase;
+}
+.topic:hover dt { color: var(--blood); }
+.topic dd { flex: 1 1 260px; margin: 0; color: var(--muted); }
+
+/* ===== O mnie - grupy technologii ===== */
+.skill-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 60px;
+}
+.skill-group {
+  flex: 1 1 220px;
+  padding: 20px;
+  background: var(--night-2);
+  border: 3px solid var(--bone);
+  box-shadow: var(--shadow);
+}
+.skill-group h2 {
+  display: inline-block;
+  padding: 2px 10px;
+  background: var(--blood);
+  color: var(--bone);
+  border: var(--border);
+  font-size: 1rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.chips li {
+  padding: 4px 12px;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: 3px 3px 0 var(--blood);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  font-weight: 700;
+  transition: transform .12s, background .12s, color .12s;
+}
+.chips li:hover {
+  background: var(--blood);
+  color: var(--bone);
+  transform: rotate(-3deg) scale(1.05);
+}
+
+/* ===== Galeria - plakaty ===== */
+.posters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+}
+
+.poster {
+  flex: 1 1 280px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bone);
+  color: var(--ink);
+  border: var(--border);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.poster:nth-child(odd):hover { transform: translate(-4px, -4px) rotate(-1deg); box-shadow: var(--shadow-hover); }
+.poster:nth-child(even):hover { transform: translate(-4px, -4px) rotate(1deg); box-shadow: var(--shadow-hover); }
+
+/* Plakat z gradientu - kolor przychodzi z widoku */
+.poster-art {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 4px;
+  min-height: 190px;
+  padding: 20px;
+  color: var(--bone);
+  border-bottom: var(--border);
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .18) 0 2px, transparent 2px 5px),
+    linear-gradient(160deg, var(--poster), var(--ink) 85%);
+  overflow: hidden;
+}
+/* Prawdziwy plakat pod spodem, na nim przyciemnienie i paski VHS */
+.poster-art {
+  min-height: 0;
+  aspect-ratio: 2 / 3;
+  isolation: isolate;
+}
+.poster-img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.1) saturate(.85);
+  transition: filter .2s, transform .3s;
+}
+.poster-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .16) 0 2px, transparent 2px 5px),
+    linear-gradient(180deg, transparent 45%, rgba(10, 6, 6, .92) 88%);
+  box-shadow: inset 0 0 0 0 var(--poster);
+  transition: box-shadow .2s;
+}
+.poster:hover .poster-img { filter: contrast(1.2) saturate(1.1); transform: scale(1.04); }
+.poster:hover .poster-art::after { box-shadow: inset 0 -6px 0 0 var(--blood); }
+
+.poster-art h3 {
+  font-family: var(--font-horror);
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 3px 3px 0 var(--ink);
+}
+.poster-year {
+  align-self: flex-start;
+  margin-bottom: auto;
+  padding: 0 8px;
+  background: var(--bone);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  font-weight: 700;
+}
+.poster-genre {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--bone-dark);
+}
+
+.poster-info { padding: 16px 20px 20px; }
+.poster-info p { color: var(--muted); font-size: .95rem; }
+.stars {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--blood);
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+}
+
+/* ===== Galeria - fragmenty kodu ===== */
+.snippet {
+  flex: 1 1 280px;
+  margin: 0;
+  background: var(--ink);
+  border: 3px solid var(--bone);
+  box-shadow: var(--shadow);
+  transition: transform .12s, box-shadow .12s;
+}
+.snippet:hover { transform: translate(-4px, -4px); box-shadow: var(--shadow-hover); }
+
+.snippet figcaption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: var(--blood);
+  color: var(--bone);
+  border-bottom: 3px solid var(--bone);
+  font-family: var(--font-head);
+  font-size: .85rem;
+  text-transform: uppercase;
+}
+.dots { display: flex; gap: 6px; }
+.dots i {
+  width: 12px;
+  height: 12px;
+  background: var(--bone);
+  border: 2px solid var(--ink);
+}
+.snippet:hover .dots i { background: var(--ink); }
+.lang {
+  margin-left: auto;
+  padding: 0 6px;
+  background: var(--ink);
+  font-family: var(--font-mono);
+  font-size: .7rem;
+}
+
+.snippet pre {
+  margin: 0;
+  padding: 16px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  line-height: 1.55;
+  color: var(--bone);
+}
+
+/* ===== Stopka ===== */
+.site-footer {
+  background: var(--ink);
+  border-top: 4px solid var(--blood);
+  color: var(--muted-dark);
+  font-family: var(--font-mono);
+  font-size: .85rem;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.footer-inner a {
+  color: var(--blood-light);
+  text-decoration: none;
+  font-weight: 700;
+}
+.footer-inner a:hover { color: var(--bone); text-decoration: underline; }
+
+/* ===== Animacje ===== */
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: .35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ===== Telefon ===== */
+@media (max-width: 600px) {
+  h1, .hero h1 { font-size: 2rem; }
+  .intro h1 { font-size: 2.2rem; }
+  .hero { padding: 24px; }
+  .logo { font-size: 1.6rem; }
+  .split-side { transform: none; }
+  .topic dt { flex-basis: 100%; }
+  /* na wąskim ekranie zakreślenie łamie się razem z tekstem */
+  mark, mark + mark {
+    display: inline;
+    transform: none;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+}

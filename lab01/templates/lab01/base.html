@@ -1,0 +1,37 @@
+{% load static %}
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Start{% endblock %} | {{ hobby_name }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Creepster&family=Space+Grotesk:wght@400;600&family=Space+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="{% static 'lab01/style.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="{% url 'lab01:home' %}">Moje <span>hobby</span></a>
+      <nav class="menu">
+        <a href="{% url 'lab01:home' %}" class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">Start</a>
+        <a href="{% url 'lab01:about' %}" class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">O mnie</a>
+        <a href="{% url 'lab01:gallery' %}" class="{% if request.resolver_match.url_name == 'gallery' %}active{% endif %}">Galeria</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container content">
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>&copy; {% now "Y" %} {{ author }}</span>
+      <a href="/">&larr; wszystkie laby</a>
+    </div>
+  </footer>
+</body>
+</html>
