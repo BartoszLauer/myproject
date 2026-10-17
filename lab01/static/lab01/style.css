@@ -1,8 +1,4 @@
-/* =====================================================
-   NEO-BRUTALIZM x HORROR
-   Grube czarne ramki, twarde cienie bez rozmycia,
-   kolor kości na tle zaschniętej krwi.
-   ===================================================== */
+
 
 :root {
   --night: #0e0909;       /* tło strony - prawie czarne */
@@ -54,7 +50,7 @@ body::before {
   pointer-events: none;
   z-index: 100;
   opacity: .08;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("img/noise.svg");
 }
 
 ::selection { background: var(--blood); color: var(--bone); }
@@ -98,7 +94,7 @@ a { color: var(--blood-light); }
   top: 100%;
   height: 34px;
   pointer-events: none;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='34' viewBox='0 0 160 34'%3E%3Cpath fill='%23b3001b' stroke='%230a0606' stroke-width='3' d='M-2 -2H162V4C150 4 148 8 147 14S144 22 141 22 136 18 135 13 130 4 120 4 108 6 107 16 104 31 99 31 94 26 93 16 88 4 78 4 66 6 65 10 62 15 59 15 55 12 54 9 48 4 38 4 27 7 26 17 23 26 19 26 14 20 13 13 8 4 -2 4Z'/%3E%3C/svg%3E") repeat-x;
+  background: url("img/drip.svg") repeat-x;
 }
 
 .header-inner {
